@@ -25,6 +25,6 @@ end
 #
 # client.get_all_tweets("mtjune11")
 
-client.search("to:mtjune11", result_type: "recent").take(3).each do |tweet|
+client.search("食べたい", result_type: "recent").take(10).each do |tweet|
   puts tweet.text
 end
