@@ -2,11 +2,11 @@
 
 require 'twitter'
 require "./config.rb"
-include Client
+include Twikeys
 
 client = Twitter::REST::Client.new do |config|
-  config.consumer_key     = read_consumer_key()
-  config.consumer_secret  = read_consumer_secret()
+  config.consumer_key     = Twikeys::Consumer_key
+  config.consumer_secret  = Twikeys::Consumer_secret
 end
 
 # def collect_with_max_id(collection=[], max_id=nil, &block)
@@ -25,6 +25,6 @@ end
 #
 # client.get_all_tweets("mtjune11")
 
-client.search("食べたい", result_type: "recent").take(10).each do |tweet|
-  puts tweet.text
+client.search("食べたい", result_type: "recent").take(20).each do |tweet|
+  puts "#{tweet.text}"
 end

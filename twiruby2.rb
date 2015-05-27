@@ -1,22 +1,24 @@
 #!/usr/bin/ruby
 
-require "tweetstream"
+require 'twitter'
 require "./config.rb"
-include Client
+include Twikeys
 
-keys = get_keys()
 
-TweetStream.configure do |config|
-	config.consumer_key = keys["consumer_key"]
-	config.consumer_secret = keys["consumer_secret"]
-	config.oauth_token = keys["access_token"]
-	config.oauth_token_secret = keys["access_token_secret"]
-	config.auth_method = :oauth
+client = Twitter::Streaming::Client.new do |config|
+	config.consumer_key = Twikeys::Consumer_key
+	config.consumer_secret = Twikeys::Consumer_secret
+	config.access_token = Twikeys::Access_token
+	config.access_token_secret = Twikeys::Access_token_secret
 end
 
+print Twikeys::Consumer_key + "\n"
+print Twikeys::Consumer_secret + "\n"
+print Twikeys::Access_token + "\n"
+print Twikeys::Access_token_secret + "\n"
 
-client = TweetStream::Client.new
-client.userstream do |status|
-	puts " #{status.user.name} -> #{status.text}\n\n"
+
+client.sample do |object|
+	puts object.text if object.is_a?(Twitter::Tweet)
 end
 
