@@ -12,13 +12,17 @@ client = Twitter::Streaming::Client.new do |config|
 	config.access_token_secret = Twikeys::Access_token_secret
 end
 
-print Twikeys::Consumer_key + "\n"
-print Twikeys::Consumer_secret + "\n"
-print Twikeys::Access_token + "\n"
-print Twikeys::Access_token_secret + "\n"
+
+
+# client.filter(:track => topics.join(",")) do |object|
+#   print object.user.screen_name + " -> " + object.text + "\n" if object.is_a?(Twitter::Tweet)
+# end
 
 
 client.sample do |object|
-	puts object.text if object.is_a?(Twitter::Tweet)
+  if object.is_a?(Twitter::Tweet)
+    if /^[^(RT)].+(食べたい|たべたい)/ =~ object.text
+      print object.user.screen_name + " -> " + object.text + "\n"
+    end
+  end
 end
-
