@@ -1,5 +1,6 @@
 #!/usr/bin/ruby
 
+require 'rubygems'
 require 'twitter'
 require 'mongo'
 require "./config.rb"
