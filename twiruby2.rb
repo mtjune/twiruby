@@ -67,7 +67,7 @@ class Tweet_Collector
 end
 
 
-collector = Twitter_Collector.new()
+collector = Tweet_Collector.new()
 collector.start
 
 print("now collecting" + "\n")
