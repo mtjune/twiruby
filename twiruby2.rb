@@ -42,20 +42,21 @@ class Tweet_Collector
     end
 
     connection = Mongo::Connection.new
-    db = connection.db('twitter_jp')
-    @jp_col = db.collection('twitter_jp')
+    client_jp = Mongo::Client.new([ '127.0.0.1:27017' ], :database => 'twitter_jp')
+		@cllection_jp = client_jp[:twitter_jp]
 
-    db = connection.db('twitter_nojp')
-    @nojp_col = db.collection('twitter_nojp')
+    client_nojp = Mongo::Client.new([ '127.0.0.1:27017' ], :database => 'twitter_nojp')
+		@collection_nojp = client_nojp[:twitter_nojp]
+
   end
 
 
   def start
     @client.sample do |status|
       if status.lang == "ja" || status.user.lang == "ja" then
-        @jp_col.insert(status.to_h)
+        @collection_jp.insert_one(status.to_h)
       else
-        @nojp_col.insert(status.to_h)
+        @collection_nojp.insert_one(status.to_h)
       end
 
 			@count += 1
