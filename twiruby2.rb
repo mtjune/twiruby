@@ -52,15 +52,17 @@ class Tweet_Collector
 
   def start
     @client.sample do |status|
-      if status.lang == "ja" || status.user.lang == "ja" then
-        @collection_jp.insert_one(status.to_h)
-      else
-        @collection_nojp.insert_one(status.to_h)
-      end
+			if status.is_a?(Twitter::Tweet) then
+      	if status.lang == "ja" || status.user.lang == "ja" then
+        	@collection_jp.insert_one(status.to_h)
+      	else
+        	@collection_nojp.insert_one(status.to_h)
+      	end
 
-			@count += 1
-			print(@count.to_s + "\n") if @count % 100 == 0
-    end
+				@count += 1
+				print(@count.to_s + "\n") if @count % 100 == 0
+    	end
+		end
   end
 
 
