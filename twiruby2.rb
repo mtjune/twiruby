@@ -41,7 +41,6 @@ class Tweet_Collector
 			config.access_token_secret = Twikeys::Access_token_secret
     end
 
-    connection = Mongo::Connection.new
     client_jp = Mongo::Client.new([ '127.0.0.1:27017' ], :database => 'twitter_jp')
 		@cllection_jp = client_jp[:twitter_jp]
 
